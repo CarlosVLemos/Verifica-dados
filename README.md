@@ -41,19 +41,27 @@ Este sistema permite que o usuário insira dados como CPF, e-mail, senha ou IP p
 ### 🖥️ 1. Clone o repositório
 
 ```bash
+# Clona o repositório para sua máquina local
 git clone https://github.com/CarlosVLemos/Verifica-dados.git
+
+# Acessa o diretório do projeto
 cd Verifica-dados
 
 
+
+# Cria o ambiente virtual
 python -m venv venv
+
+# Ativa o ambiente virtual no Windows
 venv\Scripts\activate
 
 
-python3 -m venv venv
-source venv/bin/activate
-
+# Instala todas as bibliotecas necessárias listadas em requirements.txt
 pip install -r requirements.txt
 
+
+# Inicia o servidor Flask
 python run.py
 
+# Acesse em:
 http://127.0.0.1:5000/
