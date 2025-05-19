@@ -1,0 +1,138 @@
+{% extends 'base.html' %}
+{% block title %}Dashboard de Vazamentos{% endblock %}
+
+{% block content %}
+<h1 class="mb-4">Estatísticas de Vazamentos</h1>
+
+<!-- FILTROS -->
+<form method="get" class="mb-4">
+  <div class="row g-2">
+    <div class="col-md-2">
+      <label class="form-label">Data Inicial</label>
+      <input type="date" name="data_inicial" value="{{ request.args.get('data_inicial', '') }}" class="form-control">
+    </div>
+    <div class="col-md-2">
+      <label class="form-label">Data Final</label>
+      <input type="date" name="data_final" value="{{ request.args.get('data_final', '') }}" class="form-control">
+    </div>
+    <div class="col-md-3">
+      <label class="form-label">Domínio</label>
+      <input type="text" name="dominio" placeholder="ex: gmail.com" value="{{ request.args.get('dominio', '') }}" class="form-control">
+    </div>
+    <div class="col-md-3">
+      <label class="form-label">Tipo de Dado (p.ex. Email, Senha)</label>
+      <input type="text" name="tipos" value="{{ request.args.get('tipos', '') }}" class="form-control">
+    </div>
+    <div class="col-md-2">
+      <label class="form-label">Verificado</label>
+      <select name="verificado" class="form-select">
+        <option value="">Todos</option>
+        <option value="True" {% if request.args.get('verificado') == 'True' %}selected{% endif %}>Verificado</option>
+        <option value="False" {% if request.args.get('verificado') == 'False' %}selected{% endif %}>Não Verificado</option>
+      </select>
+    </div>
+  </div>
+  <div class="mt-3">
+    <button type="submit" class="btn btn-primary">Aplicar Filtros</button>
+    <a href="{{ url_for('routes.dashboard') }}" class="btn btn-outline-secondary">Limpar</a>
+  </div>
+</form>
+
+<!-- KPI Cards -->
+<div class="row g-3 mb-4">
+  <div class="col-12 col-md-4">
+    <div class="card shadow-sm h-100">
+      <div class="card-body">
+        <h6>Total de Vazamentos</h6>
+        <p class="fs-2">{{ stats['time_series'].sum() }}</p>
+      </div>
+    </div>
+  </div>
+  <div class="col-12 col-md-4">
+    <div class="card shadow-sm h-100">
+      <div class="card-body">
+        <h6>Domínios Únicos</h6>
+        <p class="fs-2">{{ stats['top_domains'].index|length }}</p>
+      </div>
+    </div>
+  </div>
+  <div class="col-12 col-md-4">
+    <div class="card shadow-sm h-100">
+      <div class="card-body">
+        <h6>Mês com Mais Vaz.</h6>
+        <p class="fs-2">
+          {{ stats['time_series'].idxmax().strftime('%b %Y') }}
+        </p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- GRÁFICOS -->
+<div class="row g-4">
+  {% set chart_classes = "chart-wrapper ratio ratio-16x9" %}
+
+  <div class="col-12 col-md-6">
+    <div class="card shadow h-100">
+      <div class="card-body">
+        <h5 class="card-title">Dominios mais vazados</h5>
+        <div class="{{ chart_classes }}">{{ chart_top_domains|safe }}</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-12 col-md-6">
+    <div class="card shadow h-100">
+      <div class="card-body">
+        <h5 class="card-title">Vazamentos ao Longo do Tempo</h5>
+        <div class="{{ chart_classes }}">{{ chart_time_series|safe }}</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-12">
+    <div class="card shadow h-100">
+      <div class="card-body">
+        <h5 class="card-title">Tipos de Dados Vazados</h5>
+        <div class="{{ chart_classes }}">{{ chart_data_classes|safe }}</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-12 col-md-6">
+    <div class="card shadow h-100">
+      <div class="card-body">
+        <h5 class="card-title">Verificados vs. Não Verificados</h5>
+        <div class="{{ chart_classes }}">{{ chart_verified|safe }}</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-12 col-md-6">
+    <div class="card shadow h-100">
+      <div class="card-body">
+        <h5 class="card-title">Sensibilidade &amp; Spam</h5>
+        <div class="{{ chart_classes }}">{{ chart_sensitive|safe }}</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-12">
+    <div class="card shadow h-100">
+      <div class="card-body">
+        <h5 class="card-title">Domínio x Tipo de Dado Vazado</h5>
+        <div class="{{ chart_classes }}">{{ chart_heatmap|safe }}</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-12">
+    <div class="card shadow h-100">
+      <div class="card-body">
+        <h5 class="card-title">Linha do Tempo por Tipo de Dado</h5>
+        <div class="{{ chart_classes }}">{{ chart_timeline_classes|safe }}</div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}
