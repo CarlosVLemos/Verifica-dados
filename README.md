@@ -8,26 +8,13 @@ Este sistema permite que o usuário insira dados como CPF, e-mail, senha ou IP p
 
 ## 🧠 Funcionalidades
 
-- ✅ Verificação de CPF, e-mail, IP e senhas.
-- 🌐 Integração com a API [HaveIBeenPwned](https://haveibeenpwned.com/API).
+- ✅ Verificação de CPF, e-mail, IP e senhas..
 - 📊 Dashboard com visualizações gráficas interativas usando Plotly.
-- 🗂️ Histórico de buscas realizadas pelo usuário.
 - 🔍 Filtros dinâmicos por data, tipo de dado e status.
-- 🧱 Backend leve e modular usando Flask.
+- 🧱 Backend em Flask
 
 ---
 
-## 📁 Estrutura do Projeto
-
-
-
-
----
-
-## 📁 Estrutura do Projeto
-
-
----
 
 ## 🚀 Como Rodar o Projeto
 
@@ -46,7 +33,6 @@ git clone https://github.com/CarlosVLemos/Verifica-dados.git
 
 # Acessa o diretório do projeto
 cd Verifica-dados
-
 
 
 # Cria o ambiente virtual
