@@ -1,4 +1,4 @@
-<!-- app/templates/formulario.html -->
+
 {% extends 'base.html' %}
 {% block title %}Verificar Dados{% endblock %}
 
@@ -18,7 +18,7 @@
         </div>
         <div class="col-md-6">
           <label for="cpf" class="form-label">CPF</label>
-          <input type="text" id="cpf" name="cpf" class="form-control" placeholder="Digite seu CPF">
+          <input type="text" id="cpf" name="cpf" class="form-control" placeholder="000.000.000-00" maxlength="14">
         </div>
         <div class="col-md-6">
           <label for="telefone" class="form-label">Telefone</label>
@@ -43,7 +43,6 @@
     </div>
   </div>
 
-
   <!-- Cards -->
   <div class="row g-3">
     {% for r in riscos %}
@@ -67,4 +66,22 @@
   </div>
   {% endif %}
 </div>
+
+<script>
+  // Máscara para CPF no formato 000.000.000-00
+  document.getElementById('cpf').addEventListener('input', function (e) {
+    let value = e.target.value.replace(/\D/g, ''); // Remove tudo que não for dígito
+    
+    if (value.length > 11) {
+      value = value.slice(0, 11);
+    }
+
+    // Aplica a máscara progressivamente
+    value = value.replace(/(\d{3})(\d)/, '$1.$2');
+    value = value.replace(/(\d{3})(\d)/, '$1.$2');
+    value = value.replace(/(\d{3})(\d{1,2})$/, '$1-$2');
+
+    e.target.value = value;
+  });
+</script>
 {% endblock %}
