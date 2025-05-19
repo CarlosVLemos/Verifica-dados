@@ -2,7 +2,7 @@
 
 **Projeto Flask para detecção e visualização de dados pessoais potencialmente vazados na web.**
 
-Este sistema permite que o usuário insira dados como CPF, e-mail, senha ou IP para verificar possíveis vazamentos e visualizar estatísticas em um dashboard interativo e responsivo.
+Um sistema feito para consulta de segurança de dados, o usuario pode inserir seus dados e verificar se eles foram vazados na internete, se esses dados forem vazados em algum local que tenha sido inserido no datset. Junto a isso os dados pegos pelos sistema são colocados em um Dashboard para melhorar a visualização, ver qual o dado mais vazados, e verificar os vazamentos por meio de filtros 
 
 ---
 
